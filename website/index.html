@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiosGL | High-Performance 4K WebGL2 Engine</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --code-bg: #000000;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(180deg, #020617 0%, var(--bg-dark) 100%);
+            border-bottom: 1px solid #334155;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            background: -webkit-linear-gradient(45deg, var(--accent), #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 60px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #334155;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #e2e8f0;
+        }
+
+        .api-method {
+            margin-bottom: 20px;
+        }
+
+        .api-method code {
+            color: #818cf8;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #334155;
+        }
+
+        th {
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #334155;
+            margin-top: 80px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GiosGL</h1>
+        <p class="tagline">An advanced, dependency-free JavaScript library for ultra-high-resolution GPU rendering with WebGL2.</p>
+        <a href="#quickstart" class="btn">Get Started</a>
+    </header>
+
+    <div class="container">
+        <h2>Engine Features</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>4K Native Architecture</h3>
+                <p>Automatic 4K initialization with smart resizing and aspect preservation. Bypasses browser upscaling for crisp, pixel-perfect rendering.</p>
+            </div>
+            <div class="card">
+                <h3>Low Latency Pipeline</h3>
+                <p>Configured with <code>desynchronized: true</code> and discrete GPU power preferences to minimize input-to-display latency.</p>
+            </div>
+            <div class="card">
+                <h3>Resource Management</h3>
+                <p>Built-in registries for Shaders, Textures, VAOs, VBOs, and Framebuffers with safe cleanup mechanisms.</p>
+            </div>
+            <div class="card">
+                <h3>Advanced GPGPU</h3>
+                <p>Support for ping-pong buffer cycling, offscreen rendering, blitting, and SSBO simulation via float textures.</p>
+            </div>
+            <div class="card">
+                <h3>Integrated Math & Events</h3>
+                <p>Built-in matrix mathematics (Perspective, LookAt) and seamless pointer, touch, and keyboard event routing.</p>
+            </div>
+            <div class="card">
+                <h3>GPU Profiling</h3>
+                <p>Access precise hardware timing using disjoint timer queries to optimize your draw calls down to the microsecond.</p>
+            </div>
+        </div>
+
+        <h2 id="quickstart">Quick Start</h2>
+        <p>Drop <code>GiosGL.js</code> into your project and set up a high-performance render loop in seconds.</p>
+        <pre><code>&lt;canvas id="glCanvas"&gt;&lt;/canvas&gt;
+&lt;script src="GiosGL.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    const canvas = document.getElementById('glCanvas');
+    const engine = new GiosGL(canvas);
+
+    // 1. Create Shaders
+    const vs = `#version 300 es
+        in vec2 position;
+        void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
+    
+    const fs = `#version 300 es
+        precision highp float;
+        out vec4 color;
+        void main() { color = vec4(0.0, 0.8, 1.0, 1.0); }`;
+    
+    engine.createProgram('main', vs, fs, { position: 0 });
+
+    // 2. Create Geometry
+    const quad = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+    const vbo = engine.createVBO(quad);
+    const vao = engine.createVAO([{vbo: vbo, size: 2, type: engine.gl.FLOAT, location: 0}]);
+
+    // 3. Render Loop
+    engine.run((time, delta) => {
+        engine.useProgram('main');
+        engine.bindVAO(vao);
+        engine.drawTriangles(4);
+    });
+&lt;/script&gt;</code></pre>
+
+        <h2>Core API Documentation</h2>
+        
+        <h3>Initialization & Context</h3>
+        <div class
