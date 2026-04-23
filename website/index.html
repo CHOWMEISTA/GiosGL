@@ -214,4 +214,92 @@
         <h2>Core API Documentation</h2>
         
         <h3>Initialization & Context</h3>
-        <div class
+        <div class="api-method">
+            <code>new GiosGL(canvas)</code>
+            <p>Initializes the engine, applying performance hints and setting the internal resolution to 3840x2160.</p>
+        </div>
+        <div class="api-method">
+            <code>resize(width, height)</code>
+            <p>Resizes the drawing buffer independent of CSS layout. Emits events to registered <code>onResize</code> listeners.</p>
+        </div>
+
+        <h3>Shader System</h3>
+        <div class="api-method">
+            <code>createProgram(id, vsSrc, fsSrc, attribLocations?)</code>
+            <p>Compiles and links a GLSL ES 3.0 program. Automatically caches all active uniforms and attributes for ultra-fast lookup.</p>
+        </div>
+        <div class="api-method">
+            <code>useProgram(id)</code>
+            <p>Binds a compiled program for drawing.</p>
+        </div>
+        <div class="api-method">
+            <code>setUniform[1f|2f|3f|4f|1i|Matrix4fv](name, value)</code>
+            <p>Updates a uniform value on the currently bound program.</p>
+        </div>
+
+        <h3>Buffers & Geometry</h3>
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>createVBO(data, id?, usage?)</code></td>
+                <td>Uploads geometry data to GPU RAM (STATIC_DRAW by default).</td>
+            </tr>
+            <tr>
+                <td><code>createIBO(data, id?, usage?)</code></td>
+                <td>Uploads index data for element drawing.</td>
+            </tr>
+            <tr>
+                <td><code>createVAO(attribs, ibo?, id?)</code></td>
+                <td>Maps buffer data to shader attributes securely.</td>
+            </tr>
+        </table>
+
+        <h3>Textures & Framebuffers</h3>
+        <div class="api-method">
+            <code>createTexture2D(id, width, height, options)</code>
+            <p>Creates a 2D texture. Options include pixel data, internal format, and min/mag filters (Defaults to NEAREST for sharp 4K).</p>
+        </div>
+        <div class="api-method">
+            <code>createFramebuffer(id, options)</code>
+            <p>Generates an FBO attached to a texture. Essential for post-processing and GPGPU workflows.</p>
+        </div>
+        <div class="api-method">
+            <code>createCubemap(id, urls, onLoad)</code>
+            <p>Asynchronously loads six images to form a skybox or environment map.</p>
+        </div>
+
+        <h3>Utilities</h3>
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>on(eventType, handler)</code></td>
+                <td>Binds high-performance listeners for mouse, touch, and keyboard.</td>
+            </tr>
+            <tr>
+                <td><code>pickPixel(x, y)</code></td>
+                <td>Reads back a specific pixel color array. Perfect for object picking.</td>
+            </tr>
+            <tr>
+                <td><code>saveScreenshot(filename?)</code></td>
+                <td>Downloads the current framebuffer state as a PNG.</td>
+            </tr>
+            <tr>
+                <td><code>beginTimerQuery(name)</code></td>
+                <td>Starts precise hardware performance profiling.</td>
+            </tr>
+        </table>
+    </div>
+    <h2>Wiki:</h2> <link>chowmeista.github.io/GiosGL/website/wiki</link>
+
+    <footer>
+        <p>GiosGL Library &copy; 2026. Built for modern web applications and creative tools.</p>
+    </footer>
+
+</body>
+</html>
