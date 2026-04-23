@@ -1,118 +1,297 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>GiosGL Documentation Wiki</title>
-<style>
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; display: flex; }
-nav { width: 260px; background: #1e293b; padding: 20px; height: 100vh; position: fixed; overflow-y: auto; border-right: 1px solid #334155; }
-nav h2 { margin-top: 0; color: #f8fafc; font-size: 1.5rem; border-bottom: 2px solid #0ea5e9; padding-bottom: 10px; }
-nav a { display: block; color: #38bdf8; text-decoration: none; margin-bottom: 12px; font-weight: 500; }
-nav a:hover { color: #bae6fd; text-decoration: underline; }
-main { margin-left: 300px; padding: 40px; max-width: 850px; line-height: 1.6; }
-h1 { color: #e0f2fe; font-size: 2.5rem; }
-h2 { color: #7dd3fc; margin-top: 40px; border-bottom: 1px solid #334155; padding-bottom: 8px; }
-h3 { color: #38bdf8; }
-pre { background: #020617; padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid #334155; }
-code { font-family: 'Courier New', Courier, monospace; color: #cbd5e1; }
-.method { background: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #0ea5e9; }
-.method code { color: #7dd3fc; font-size: 1.1rem; font-weight: bold; }
-.method p { margin: 10px 0 0 0; color: #94a3b8; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiosGL Wiki - Developer Documentation</title>
+    <style>
+        :root {
+            --bg-dark: #020617;
+            --bg-nav: #0f172a;
+            --bg-tab: #1e293b;
+            --accent: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --code-bg: #000000;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Tabs Navigation */
+        .tabs-header {
+            background: var(--bg-nav);
+            border-bottom: 1px solid #334155;
+            display: flex;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 20px 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        /* Content Sections */
+        .content-container {
+            flex-grow: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--accent); }
+        h2 { font-size: 1.8rem; margin-top: 40px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        p { color: var(--text-secondary); line-height: 1.7; }
+
+        pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #334155;
+            margin: 20px 0;
+        }
+
+        code { font-family: 'Fira Code', monospace; color: #e2e8f0; }
+
+        .method-card {
+            background: var(--bg-tab);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .method-card code {
+            color: var(--accent-hover);
+            font-size: 1.1rem;
+        }
+
+        /* Cookie Notice */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid var(--accent);
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        #cookie-banner button {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #cookie-banner button:hover {
+            background: var(--accent-hover);
+        }
+
+        .hidden { display: none !important; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            border-top: 1px solid #334155;
+            background: var(--bg-nav);
+        }
+    </style>
 </head>
 <body>
-<nav>
-<h2>GiosGL Wiki</h2>
-<a href="#intro">1. Introduction</a>
-<a href="#init">2. Initialization</a>
-<a href="#shaders">3. Shader System</a>
-<a href="#buffers">4. Buffers & VAOs</a>
-<a href="#textures">5. Textures & FBOs</a>
-<a href="#timing">6. GPU Timing Queries</a>
-<a href="#events">7. Event Handling</a>
-<a href="#math">8. Math Utilities</a>
-</nav>
-<main>
-<h1 id="intro">GiosGL Documentation</h1>
-<p>GiosGL is a zero-dependency, high-performance WebGL2 library heavily optimized for 4K displays and real-time computation (GPGPU).</p>
 
-    <h2 id="init">Initialization</h2>
-    <div class="method">
-        <code>new GiosGL(canvas)</code>
-        <p>Initializes the engine. Automatically applies `desynchronized: true`, disables `antialias` for 4K performance, and sets internal resolution to 3840x2160.</p>
-    </div>
-    <div class="method">
-        <code>resize(width, height)</code>
-        <p>Resizes the WebGL drawing buffer and updates the viewport. Fires all registered <code>onResize</code> listeners.</p>
-    </div>
-    <div class="method">
-        <code>run(drawCallback)</code>
-        <p>Starts the main animation loop. <code>drawCallback(time, delta)</code> is called every frame with time measured in seconds.</p>
+    <div class="tabs-header">
+        <button class="tab-btn" onclick="openTab(event, 'overview')">Overview</button>
+        <button class="tab-btn" onclick="openTab(event, 'api')">API Reference</button>
+        <button class="tab-btn" onclick="openTab(event, 'gpgpu')">Advanced GPGPU</button>
+        <button class="tab-btn" onclick="openTab(event, 'utils')">Utilities</button>
     </div>
 
-    <h2 id="shaders">Shader System</h2>
-    <div class="method">
-        <code>createProgram(id, vsSrc, fsSrc, attribLocations)</code>
-        <p>Compiles vertex and fragment shaders into a program. Caches all active uniforms and attributes for O(1) lookups during the render loop.</p>
-    </div>
-    <div class="method">
-        <code>useProgram(id)</code>
-        <p>Binds the specified program for current rendering.</p>
-    </div>
-    <div class="method">
-        <code>setUniform[1f|2f|3f|4f|1i|Matrix4fv](name, value)</code>
-        <p>Sets a uniform on the currently active program. Extremely fast due to internal caching.</p>
+    <div class="content-container">
+        <section id="overview" class="tab-content">
+            <h1>GiosGL v1.0.0</h1>
+            <p>Welcome to the official documentation for GiosGL, the world's most lightweight 4K-native WebGL2 engine. GiosGL is designed for developers who need extreme performance, low latency, and professional-grade GPU control without the overhead of heavy frameworks.</p>
+            
+            <h2>Core Philosophy</h2>
+            <ul>
+                <li><strong>4K Everywhere:</strong> Native 3840x2160 internal scaling.</li>
+                <li><strong>Zero Garbage:</strong> Designed for 60FPS with minimal allocation.</li>
+                <li><strong>GPGPU First:</strong> First-class support for simulation and compute-like tasks.</li>
+            </ul>
+
+            <pre><code>// Installation
+const engine = new GiosGL(document.getElementById('canvas'));
+engine.resize(3840, 2160); // Optional: Default is 4K</code></pre>
+        </section>
+
+        <section id="api" class="tab-content">
+            <h1>API Reference</h1>
+            
+            <div class="method-card">
+                <code>engine.createProgram(id, vs, fs, attribs)</code>
+                <p>Compiles and links a new shader program. Automatically caches all uniform locations for O(1) performance.</p>
+            </div>
+
+            <div class="method-card">
+                <code>engine.createVAO(attribs, ibo, id)</code>
+                <p>Configures a Vertex Array Object. Maps VBOs to shader attributes with zero manual binding required in the loop.</p>
+            </div>
+
+            <div class="method-card">
+                <code>engine.setUniformMatrix4fv(name, mat4)</code>
+                <p>High-speed matrix upload. Uses cached locations to avoid string-parsing overhead during frames.</p>
+            </div>
+        </section>
+
+        <section id="gpgpu" class="tab-content">
+            <h1>Advanced GPGPU</h1>
+            <p>GiosGL excels at stateful simulations (Falling Sand, Fluids, Cellular Automata) by utilizing texture-based compute loops.</p>
+            
+            <h2>Ping-Pong Rendering</h2>
+            <p>Use framebuffers and textures to feed the GPU's output back into itself as input.</p>
+            <pre><code>// Example Ping-Pong
+engine.createFramebuffer('bufferA', { texture: texA });
+engine.createFramebuffer('bufferB', { texture: texB });
+
+// In loop
+engine.bindFramebuffer('bufferB');
+engine.bindTexture2D('texA', 0); // Use previous state
+engine.drawTriangles(4);</code></pre>
+
+            <div class="method-card">
+                <code>engine.blitFramebuffer(src, dst, w, h)</code>
+                <p>Performs a high-speed hardware copy from one buffer to another, essential for post-processing effects.</p>
+            </div>
+        </section>
+
+        <section id="utils" class="tab-content">
+            <h1>Utilities & Profiling</h1>
+            
+            <div class="method-card">
+                <code>engine.beginTimerQuery(name)</code>
+                <p>Starts a hardware-level GPU timer query. Measures execution time in nanoseconds on the actual GPU silicon.</p>
+            </div>
+
+            <div class="method-card">
+                <code>engine.saveScreenshot(filename)</code>
+                <p>Triggers a download of the current 4K frame buffer as a high-resolution PNG.</p>
+            </div>
+
+            <h2>Math Helpers</h2>
+            <p>GiosGL provides static math utilities to avoid external dependencies like glMatrix.</p>
+            <pre><code>const projection = GiosGL.mat4Perspective(45, 16/9, 0.1, 1000);
+const view = GiosGL.mat4LookAt([0,0,5], [0,0,0], [0,1,0]);</code></pre>
+        </section>
     </div>
 
-    <h2 id="buffers">Buffers & VAOs</h2>
-    <div class="method">
-        <code>createVBO(data, id?, usage?)</code>
-        <p>Uploads a <code>Float32Array</code> to the GPU as an ARRAY_BUFFER.</p>
-    </div>
-    <div class="method">
-        <code>createVAO(attribs, ibo?, id?)</code>
-        <p>Creates a Vertex Array Object. <code>attribs</code> is an array of objects specifying <code>{vbo, size, type, normalized, stride, offset, location, divisor?}</code>.</p>
+    <div id="cookie-banner">
+        <span>🍪 This site uses "cookies" (localStorage) to remember your active tab and engine settings.</span>
+        <button onclick="acceptCookies()">Got it!</button>
     </div>
 
-    <h2 id="textures">Textures & Framebuffers</h2>
-    <div class="method">
-        <code>createTexture2D(id, w, h, opts)</code>
-        <p>Creates a 2D texture. Supports options for <code>format</code>, <code>internalFormat</code>, <code>type</code>, and <code>pixels</code>. Defaults to NEAREST filtering.</p>
-    </div>
-    <div class="method">
-        <code>createFramebuffer(id, opts)</code>
-        <p>Generates an FBO. Pass <code>{ texture: myWebGLTexture }</code> to bind a color attachment. Pass <code>{ depth: true }</code> to auto-generate a depth renderbuffer.</p>
-    </div>
-    <div class="method">
-        <code>blitFramebuffer(src, dst, w, h, mask, filter)</code>
-        <p>High-speed pixel copy from one FBO to another. Ideal for post-processing chains.</p>
-    </div>
+    <footer>
+        <p>&copy; 2026 GiosGL Architecture. All rights reserved.</p>
+    </footer>
 
-    <h2 id="timing">GPU Timing Queries</h2>
-    <p>Measure exact hardware execution time using <code>EXT_disjoint_timer_query_webgl2</code>.</p>
-    <div class="method">
-        <code>beginTimerQuery(name)</code> / <code>endTimerQuery(name)</code>
-        <p>Wrap your draw calls in these to measure execution time. Retrieve results frames later using <code>resolveTimerQuery(name)</code>.</p>
-    </div>
+    <script>
+        // Tab Management with Cookie (LocalStorage) Persistence
+        function openTab(evt, tabName) {
+            // Hide all contents
+            const contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
 
-    <h2 id="events">Event Handling</h2>
-    <div class="method">
-        <code>on(eventType, handler)</code>
-        <p>Binds standard DOM events (mousedown, touchmove, wheel) natively through the engine.</p>
-    </div>
-    <div class="method">
-        <code>pickPixel(x, y, width, height)</code>
-        <p>Reads pixels back to the CPU via <code>gl.readPixels</code>. Perfect for color-based object picking.</p>
-    </div>
+            // Deactivate all buttons
+            const btns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
 
-    <h2 id="math">Math Utilities</h2>
-    <p>GiosGL includes static math helpers to keep the library dependency-free.</p>
-    <ul>
-        <li><code>GiosGL.mat4Identity()</code></li>
-        <li><code>GiosGL.mat4Perspective(fovy, aspect, near, far)</code></li>
-        <li><code>GiosGL.mat4LookAt(eye, target, up)</code></li>
-    </ul>
-</main>
+            // Show current tab and activate button
+            document.getElementById(tabName).classList.add("active");
+            if (evt) {
+                evt.currentTarget.classList.add("active");
+            } else {
+                // Initial load from cookie
+                document.querySelector(`[onclick*='${tabName}']`).classList.add("active");
+            }
+
+            // Save to "Cookie" (LocalStorage)
+            localStorage.setItem('giosgl_active_tab', tabName);
+        }
+
+        // Cookie Banner Management
+        function acceptCookies() {
+            localStorage.setItem('giosgl_cookies_accepted', 'true');
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+
+        // Initialization Logic
+        window.onload = function() {
+            // Check cookie acceptance
+            if (localStorage.getItem('giosgl_cookies_accepted') === 'true') {
+                document.getElementById('cookie-banner').classList.add('hidden');
+            }
+
+            // Load last active tab or default to overview
+            const lastTab = localStorage.getItem('giosgl_active_tab') || 'overview';
+            openTab(null, lastTab);
+        };
+    </script>
 </body>
 </html>
